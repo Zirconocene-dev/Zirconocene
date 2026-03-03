@@ -26,8 +26,8 @@ trap 'dnf config-manager setopt keepcache=0' EXIT
       trivalent-subresource-filter
 )
 
-( # install fish!
-    dnf -y install $dnf_opts fish
+( # install fish! and other cli utils :3c
+    dnf -y install $dnf_opts fish bat
 )
 
 ( # install podman compose lol

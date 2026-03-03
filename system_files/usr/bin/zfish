@@ -1,0 +1,23 @@
+#!/bin/env fish
+#iZfish version v1, very in beta
+set zfish_dir /usr/share/zirconocene/zfish/
+
+# we don't need to do any logic for --choose lol
+# @fish-lsp-disable-next-line 4004
+argparse -x list,choose l/list c/choose h/help -- $argv or return
+
+#i    --help/-h: executes the help function
+if set -ql _flag_help
+    # matches lines that start with #i, removes the #i, then prints them
+    sed -n '/^#i/{s/#i//p}' zfish
+    exit
+end
+
+#i    --list/-l: lists all available scripts
+if set -ql _flag_list
+    find "$zfish_dir" -type f 
+end
+
+#i    --choose/-c (default): displays available scripts and run the selected one
+
+fish (fzf --preview 'bat --color=always {}' --walker-root="$zfish_dir" --preview-window=up,67% --header="Choose a script to use!" --header-border=sharp --preview-border=sharp)
