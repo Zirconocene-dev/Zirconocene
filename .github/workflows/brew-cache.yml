@@ -1,0 +1,35 @@
+name: Cache podman
+on:
+  schedule:
+      - cron: "5 4 * * 5" # 10:05am UTC everyday
+  workflow_dispatch:
+jobs:
+  brew_cache:
+    name: Preinstall podman + cache it
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        flavor: [""]
+        platform: ["amd64"]
+    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
+    steps:
+      - name: Enable cache for brew
+        uses: actions/cache@v5
+        id: cache
+        with:
+          path: /home/linuxbrew
+          key: brew-${{ matrix.platform }}
+      # TODO: remove me when we have a new podman in 26.04 runners
+      # needed because old podman doesn't push layer annotations for
+      # the rpm-ostree rechunker at all
+      - name: Install Podman from Brew
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        env:
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
+        run: |
+          /home/linuxbrew/.linuxbrew/bin/brew install podman

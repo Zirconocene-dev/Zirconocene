@@ -40,6 +40,16 @@ jobs:
         platform: ["amd64"]
     runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
     steps:
+      - name: Restore linuxbrew from cache
+        uses: actions/cache@v5
+        id: cache
+        with:
+          path: /home/linuxbrew
+          key: brew-${{ matrix.platform }}
+      - name: Debug info
+        run: |
+          df
+
       - name: Mount BTRFS for podman storage
         if: ${{ matrix.platform != 'arm64' }}
         uses: ublue-os/container-storage-action@911baca08baf30c8654933e9e9723cb399892140
@@ -80,14 +90,6 @@ jobs:
 
       - name: Rechunk Image
         run: sudo podman run --rm --privileged -v /var/lib/containers:/var/lib/containers --entrypoint /usr/libexec/bootc-base-imagectl "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" rechunk --max-layers 448 "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" "localhost/${IMAGE_NAME}:${DEFAULT_TAG}"
-
-      # TODO: remove me when we have a new podman in 26.04 runners
-      # needed because old podman doesn't push layer annotations for
-      # the rpm-ostree rechunker at all
-      - name: Install Podman from Brew
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        run: |
-          /home/linuxbrew/.linuxbrew/bin/brew install podman
 
       - name: Login to Red Hat Quay.io Container Registry
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
