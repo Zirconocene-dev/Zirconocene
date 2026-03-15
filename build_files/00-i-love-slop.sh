@@ -54,5 +54,9 @@ trap 'dnf config-manager setopt keepcache=0' EXIT
     dnf -y install nm-connection-editor-desktop nm-connection-editor
 )
 
+( # uninstall tailscale, i don't feel like using it
+    dnf -y remove tailscale
+)
+
 # copyyyyyy
 cp -avf "/ctx/files"/. /
