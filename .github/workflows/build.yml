@@ -106,7 +106,7 @@ jobs:
           -v /var/lib/containers:/var/lib/containers \
           --entrypoint /usr/libexec/bootc-base-imagectl \
           quay.io/centos-bootc/centos-bootc:stream10 \
-          rechunk --max-layers 167 \
+          rechunk --max-layers 169 \
           "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" \
           "localhost/${IMAGE_NAME}:${DEFAULT_TAG}"
 
