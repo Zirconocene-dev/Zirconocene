@@ -76,9 +76,9 @@ jobs:
           BUILD_FLAVOR: ${{ matrix.flavor }}
         run: |
           if [ "${BUILD_FLAVOR}" == "nvidia" ] ; then
-            echo "BASE_IMAGE=ghcr.io/zirconium-dev/zirconium-mkosi-nvidia" >> $GITHUB_ENV
+            echo "BASE_IMAGE=ghcr.io/zirconium-dev/zirconium-nvidia" >> $GITHUB_ENV
           else
-            echo "BASE_IMAGE=ghcr.io/zirconium-dev/zirconium-mkosi" >> $GITHUB_ENV
+            echo "BASE_IMAGE=ghcr.io/zirconium-dev/zirconium" >> $GITHUB_ENV
           fi
 
       - name: Build image
