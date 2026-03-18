@@ -2,10 +2,10 @@
 
 set -xeuo pipefail
 
-dnf_opts="--setopt=fastestmirror=True"
 dnf install -y dnf5-plugins
 
 dnf config-manager setopt keepcache=1
+dnf config-manager setopt fastestmirror=True
 trap 'dnf config-manager setopt keepcache=0' EXIT
 
 ( # install trivalent
@@ -21,18 +21,18 @@ trap 'dnf config-manager setopt keepcache=0' EXIT
 
 ( # stuff im taking from the secureblue project lol
     dnf -y copr enable secureblue/packages "fedora-43-$(arch)"
-    dnf -y install $dnf_opts \
+    dnf -y install \
       hardened_malloc \
       no_rlimit_as \
       trivalent-subresource-filter
 )
 
 ( # install fish! and other cli utils :3c
-    dnf -y install $dnf_opts fish bat
+    dnf -y install fish bat
 )
 
 ( # install podman compose lol
-    dnf -y install $dnf_opts podman-compose
+    dnf -y install podman-compose
 )
 
 ( # install usb-wakeup-control in the container :p
