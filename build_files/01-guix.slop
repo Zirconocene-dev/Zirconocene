@@ -1,0 +1,31 @@
+#!/bin/env bash
+# stolen from https://codeberg.org/16levels/guix-silverblue/src/branch/main/Containerfile
+
+( # submodule compile
+    semodule -i guix-daemon.cil
+    rm -rf /run/selinux-policy
+)
+
+( # Actual Guix init stuff lol
+    # gpg key bs
+    chmod 755 /usr/lib/pki
+    chmod 555 /usr/lib/pki/guix-gpg
+    chmod 444 /usr/lib/pki/guix-gpg/*
+    chmod 444 /usr/lib/environment.d/99-guix.conf
+
+    # user&group stuff
+    systemd-sysusers 99-guix.conf
+
+    # Create mountpoint for Guix store
+    mkdir -p /gnu
+    chown -R guix-daemon:guix-daemon /gnu
+
+    # symlinks for guix
+    ln -sf /var/guix/profiles/per-user/root/current-guix/bin/guix /usr/bin/guix
+
+    chmod 755 /usr/bin/guix-init.sh
+    chmod 644 /usr/lib/systemd/system/guix-*.service
+    systemctl --root=/ enable guix-first-boot.service
+
+    rm -rf /run/systemd/sysusers /run/systemd/journal
+)

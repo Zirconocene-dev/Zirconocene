@@ -1,0 +1,39 @@
+[Unit]
+Description=Build daemon for GNU Guix
+ConditionPathExists=/var/guix/profiles/per-user/root/current-guix/bin/guix-daemon
+After=gnu.mount
+Requires=gnu.mount
+
+[Service]
+ExecStart=/var/guix/profiles/per-user/root/current-guix/bin/guix-daemon \
+    --discover=yes \
+    --substitute-urls='https://bordeaux.guix.gnu.org https://ci.guix.gnu.org'
+Environment='GUIX_STATE_DIRECTORY=/var/guix' 'GUIX_LOCPATH=/var/guix/profiles/per-user/root/guix-profile/lib/locale' LC_ALL=en_US.utf8
+User=guix-daemon
+Type=exec
+# Ensure process runs with membership in group 'kvm'
+SupplementaryGroups=kvm
+
+# Provide the CAP_CHOWN capability so that guix-daemon can create and chown
+# /var/guix/profiles/per-user/$USER and also chown failed build directories
+# when using '--keep-failed'.  Note that guix-daemon explicitly drops ambient
+# capabilities before executing build processes so they don't inherit them.
+AmbientCapabilities=CAP_CHOWN
+
+StandardOutput=journal
+StandardError=journal
+
+# Work around a nasty systemd ‘feature’ that kills the entire process tree
+# (including the daemon!) if any child, such as cc1plus, runs out of memory.
+OOMPolicy=continue
+
+# Despite the name, this is rate-limited: a broken daemon will eventually fail.
+Restart=always
+
+# See <https://lists.gnu.org/archive/html/guix-devel/2016-04/msg00608.html>.
+# Some package builds (for example, go@1.8.1) may require even more than
+# 1024 tasks.
+TasksMax=8192
+
+[Install]
+WantedBy=multi-user.target

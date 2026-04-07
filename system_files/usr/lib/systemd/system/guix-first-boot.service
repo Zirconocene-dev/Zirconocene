@@ -1,0 +1,13 @@
+[Unit]
+Description=Guix First Boot Initialization
+After=network-online.target
+Wants=network-online.target
+# Only run if Guix is not yet installed in /var
+ConditionPathExists=!/var/guix/profiles
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/guix-init.sh
+
+[Install]
+WantedBy=multi-user.target

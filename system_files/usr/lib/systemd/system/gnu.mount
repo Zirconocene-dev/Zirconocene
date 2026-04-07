@@ -1,0 +1,14 @@
+[Unit]
+Description=Bind mount for Guix Store
+DefaultDependencies=no
+After=var.mount
+ConditionPathExists=/var/lib/gnu
+
+[Mount]
+What=/var/lib/gnu
+Where=/gnu
+Type=none
+Options=bind,defaults
+
+[Install]
+WantedBy=local-fs.target
