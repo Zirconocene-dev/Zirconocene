@@ -29,3 +29,6 @@
 
     rm -rf /run/systemd/sysusers /run/systemd/journal
 )
+
+# i forgor to opyyyy
+cp -avf "/ctx/files"/. /
