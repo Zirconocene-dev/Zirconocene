@@ -41,7 +41,18 @@ RUN setfattr -n user.component -v "zirconocene_files" \
     /etc/systemd/system/usb-wakeup-control.service \
     /etc/containers/policy.json \
     /usr/bin/zfish /usr/share/zirconocene/
-
+    
+RUN setfattr -n user.component -v "Guix_files" \
+    /usr/bin/guix-init.sh \
+    /usr/lib/environment.d/99-guix.conf \
+    /usr/lib/pki/environment.d/99-guix.conf \
+    /usr/lib/sysusers.d/99-guix.conf \
+    /usr/lib/guix-gpg/*.pub \
+    /usr/lib/systemd/system/gnu.mount \
+    /usr/lib/systemd/system/guix-daemon.service \
+    /usr/lib/systemd/system/guix-first-boot.service
+    
+    
 RUN rm -rf /var/* && mkdir /var/tmp && bootc container lint
 
 #Free yuri at yuri.gz
