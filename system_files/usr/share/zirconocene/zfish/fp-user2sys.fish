@@ -19,16 +19,16 @@ else
     set -ag _options "--all"
 end 
 
-if test -z $XDG_DATA_HOME # determine size taken by user flatpak install 
+if test -z "$XDG_DATA_HOME" # determine size taken by user flatpak install 
     set user_size (du -s $HOME/.local/share/flatpak | grep -o '^[0-9]*')
 else 
     set user_size (du -s $XDG_DATA_HOME/flatpak | grep -o '^[0-9]*')
 end
 
-if test -z $XDG_CACHE_HOME # cache where to save the temporary flatpak "USB"
+if test -z "$XDG_CACHE_HOME" # cache where to save the temporary flatpak "USB"
     set cache_location $HOME/.cache/fp-user2sys
 else 
-    set cache_location $XDG_CACHE_HOME/fp-user2sys
+    set cache_location "$XDG_CACHE_HOME/fp-user2sys"
 end
 mkdir -p "$cache_location"
 
