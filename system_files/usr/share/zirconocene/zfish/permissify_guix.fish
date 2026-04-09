@@ -5,4 +5,4 @@ echo "Do you want to continue?"
 if ! gum confirm
     exit 0
 end
-run0 semanage permissive -a guix_daemon.guix_daemon_t
+run0 bash -c "semanage permissive -a guix_daemon.guix_daemon_t"
