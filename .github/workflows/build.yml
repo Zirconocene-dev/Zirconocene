@@ -39,6 +39,12 @@ jobs:
         platform: ["amd64"]
     runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
     steps:
+      - name: Mount BTRFS loopback
+        uses: fluoriteByte/container-storage-action@137562747e1296fa1d355e1ff2e6b95cddc0f974
+        with:
+          target-dir: /var/lib/containers
+          mount-opts: compress-force=zstd:-1
+          loopback-free: 0.8
       - name: Restore linuxbrew from cache
         uses: actions/cache@v5
         id: cache
