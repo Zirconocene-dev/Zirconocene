@@ -7,13 +7,16 @@ Includes some utils i use + useful scripts that i spend time writing and not pro
 Inclusions include:
 - trivalent
 - h_malloc (not default)
-- fish!
+- fish!, bat, wget
 - podman-compose
 - usb-wakeup-control
 - usbguard
+- android udev rules
 - default fedora printing util that some fedora spins has, (dms's is ass rn)
 - nm-connection-editor because dms's connection editor is non existant x3
 - system printer applet, cus there's no fully working printer management in dms x3
+- dnscrypt for working DoH
+- Remove tailscale, fuck that slopware
 Build instructions:
 ```
 git submodule init # unfortunately, --recursive still isn't default, just like sha256 repos :sob:
