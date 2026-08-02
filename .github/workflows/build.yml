@@ -37,7 +37,7 @@ jobs:
       matrix:
         flavor: [""]
         platform: ["amd64"]
-    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-26.04' || 'ubuntu-26.04-arm' }}
+    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
     steps:
       - name: Free disk space
         uses: hastd/free-disk-space@68572aeaadb7f76bd408246328e95926323402b5 # v0.1.2
@@ -45,13 +45,13 @@ jobs:
           exclude: |
             /opt/hostedtoolcache/Python
           skip-if-available: "64G"
-#      - name: Restore linuxbrew from cache
-#        uses: actions/cache@v5
-#        id: cache
-#        if: github.ref == 'refs/heads/main'
-#        with:
-#          path: /home/linuxbrew
-#          key: brew-${{ matrix.platform }}
+      - name: Restore linuxbrew from cache
+        uses: actions/cache@v5
+        id: cache
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: /home/linuxbrew
+          key: brew-${{ matrix.platform }}
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
