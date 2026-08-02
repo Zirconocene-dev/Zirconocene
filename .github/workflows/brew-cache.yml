@@ -32,4 +32,5 @@ jobs:
         env:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
         run: |
+          /home/linuxbrew/.linuxbrew/bin/brew update
           /home/linuxbrew/.linuxbrew/bin/brew install podman
