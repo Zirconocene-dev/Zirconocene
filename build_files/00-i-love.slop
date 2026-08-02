@@ -47,6 +47,7 @@ trap 'dnf config-manager setopt keepcache=0' EXIT
     systemctl enable usbguard
 )
 ( # install adb and udev stuff
+    dnf -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
     dnf -y install android-udev-rules android-tools
 )
 ( # install system-config-printer (only libs and udev by default for some reason???
