@@ -11,5 +11,3 @@ KERNEL_VERSION="$(find "/usr/lib/modules" -maxdepth 1 -type d ! -path "/usr/lib/
 export DRACUT_NO_XATTR=1
 dracut --no-hostonly --kver "$KERNEL_VERSION" --reproducible --zstd -v --add ostree -f "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"
 chmod 0600 "/usr/lib/modules/${KERNEL_VERSION}/initramfs.img"
-chmod 644 /etc/ssh/ssh_config.d/20-systemd-ssh-proxy.conf
-# ^ stupid fucking fix i shouldnt need to do but i fucking have to aaaaaa
