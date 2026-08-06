@@ -93,9 +93,10 @@ jobs:
           -f ./Containerfile .
 
       - name: Rechunk Image
+        env:
+          image_name: "localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
         run: |
-          export image_name="localhost/${IMAGE_NAME}:${DEFAULT_TAG}"
-          
+
           # FIXME: Bandaid fix for
           # https://github.com/zirconium-dev/zirconium/issues/363
           # Do this properly in mkosi at some point
