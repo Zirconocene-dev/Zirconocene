@@ -45,6 +45,10 @@ jobs:
           exclude: |
             /opt/hostedtoolcache/Python
           skip-if-available: "64G"
+      - name: Nuke /etc/containers/registries.conf
+        run: |
+          sudo unlink /etc/containers/registries.conf
+        # Doing that cus of mismatching config versions, we don't need unqualified names *at all*
       - name: Restore linuxbrew from cache
         uses: actions/cache@v5
         id: cache
