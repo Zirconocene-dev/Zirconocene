@@ -94,7 +94,7 @@ jobs:
 
       - name: Rechunk Image
         env:
-          image_name: "localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
+          image_name: "${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
         run: |
 
           # FIXME: Bandaid fix for
