@@ -1,0 +1,24 @@
+name: Cache dnf packages
+on:
+  schedule:
+      - cron: "5 4 * * 5"
+  workflow_dispatch:
+jobs:
+  dnf_cache:
+    name: build cache image
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        flavor: [""]
+        platform: ["amd64"]
+    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
+    steps:
+      - name: Build cache layer
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        run: |
+          podman build -t zirconocene:cache -f dl_cache.containerfile
