@@ -16,6 +16,10 @@ jobs:
         platform: ["amd64"]
     runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          submodules: true
       - name: Build cache layer
         run: |
           podman build -t zirconocene:cache -f dl_cache.containerfile
