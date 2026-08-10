@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+dnf download -y --resolve dnf5-plugins jq
+dnf install -y dnf5-plugins jq
+
+( # Repo setup :3c ^w^
+    # terra
+    dnf -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+
+    # trivalent
+    curl -fLsS --retry 5 -o /etc/yum.repos.d/repo.secureblue.dev.secureblue.repo https://repo.secureblue.dev/secureblue.repo
+    secureblue_gpg_key_path="$(dnf repo info secureblue --json | jq -r '.[0].gpg_key.[0]')"
+    rpmkeys --import "${secureblue_gpg_key_path}"
+
+    # actually useful secureblue things
+    dnf -y copr enable secureblue/packages "fedora-43-$(arch)"
+)

@@ -2,7 +2,7 @@
 
 set -xeuo pipefail
 
-dnf install -y dnf5-plugins
+dnf install -y dnf5-plugins jq
 
 dnf config-manager setopt keepcache=1
 dnf config-manager setopt fastestmirror=True

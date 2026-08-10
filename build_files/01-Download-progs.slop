@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -xeuo pipefail
+
+dnf config-manager setopt keepcache=1
+dnf config-manager setopt fastestmirror=True
+trap 'dnf config-manager setopt keepcache=0' EXIT
+
+dnf repoinfo
+
+( # stuff im taking from the secureblue project lol
+    dnf -y download --resolve \
+        hardened_malloc no_rlimit_as \
+        trivalent-subresource-filter \
+        fish bat wget podman-compose \
+        usbguard usbguard-notifier usbguard-tools \
+        android-tools \
+        system-config-printer system-config-printer-applet \
+        nm-connection-editor-desktop nm-connection-editor \
+        dnscrypt-proxy
+    dnf -y download --resolve --repo=terra android-udev-rules
+)

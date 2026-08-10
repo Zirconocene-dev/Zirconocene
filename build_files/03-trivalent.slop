@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+( # download trivalent
+    dnf --best --repo=secureblue -y download --resolve trivalent
+)
