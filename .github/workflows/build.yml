@@ -45,9 +45,9 @@ jobs:
           exclude: |
             /opt/hostedtoolcache/Python
           skip-if-available: "80G"
-      - name: Nuke /etc/containers/registries.conf
+      - name: custom /etc/containers/registries.conf
         run: |
-          sudo unlink /etc/containers/registries.conf
+          echo -en '[storage.options.pull_options]\nenable_partial_images = "true"' | sudo tee /etc/containers/registries.conf
         # Doing that cus of mismatching config versions, we don't need unqualified names *at all*
       - name: Restore linuxbrew from cache
         uses: actions/cache@v5
