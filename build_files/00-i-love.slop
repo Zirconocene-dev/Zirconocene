@@ -19,11 +19,6 @@ trap 'dnf config-manager setopt keepcache=0' EXIT
     rpmkeys --import "${secureblue_gpg_key_path}"
 )
 
-( # terra repo!
-    dnf -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
-    dnf -y update
-)
-
 ( # stuff im taking from the secureblue project lol
     dnf -y copr enable secureblue/packages "fedora-43-$(arch)"
     dnf -y install \
@@ -51,9 +46,7 @@ trap 'dnf config-manager setopt keepcache=0' EXIT
     dnf -y install usbguard usbguard-notifier usbguard-tools
     systemctl enable usbguard
 )
-( # install adb and udev stuff
-    dnf -y install android-udev-rules android-tools
-)
+
 ( # install system-config-printer (only libs and udev by default for some reason???
     dnf -y install system-config-printer system-config-printer-applet
 )
