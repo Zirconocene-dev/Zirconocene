@@ -1,0 +1,14 @@
+# install trivalent
+"trivalent": --setopt=install_weak_deps=False --repo=secureblue
+# useful stuff from secureblue
+"hardened_malloc no_rlimit_as trivalent-subresource-filter": --repo=copr:copr.fedorainfracloud.org:secureblue:packages
+# cli utils :3
+"fish bat wget": --repo=fedora
+# install usbguard
+"install usbguard usbguard-notifier usbguard-tools": --repo=fedora
+# printer applet
+"system-config-printer system-config-printer-applet": --repo=fedora
+# network manager applet
+"nm-connection-editor-desktop nm-connection-editor": --repo=fedora
+# dnscrypt-proxy
+"dnscrypt-proxy": --repo=fedora
