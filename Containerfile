@@ -16,13 +16,21 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/run \
     --mount=type=tmpfs,dst=/boot \
     --mount=type=cache,dst=/var/cache/libdnf5 \
-    /ctx/build/00-i-love.slop
+    /ctx/build/00-repo.bash
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/var \
+    --mount=type=tmpfs,dst=/tmp \
+    --mount=type=tmpfs,dst=/run \
+    --mount=type=tmpfs,dst=/boot \
+    --mount=type=cache,dst=/var/cache/libdnf5 \
+    /ctx/build/01-i-love-slop.bash
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/run \
     --mount=type=tmpfs,dst=/boot \
     --network=none \
-    /ctx/build/99-problems-but-a-hook-aint-one.sh
+    /ctx/build/99-problems-but-a-hook-aint-one.bash
 
 RUN setfattr -n user.component -v "zirconocene_files" \
     /usr/bin/usb-wakeup-control \
