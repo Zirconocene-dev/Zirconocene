@@ -39,12 +39,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --network=none \
     /ctx/build/99-problems-but-a-hook-aint-one.bash
 
-RUN setfattr -n user.component -v "zirconocene_files" \
-    /usr/bin/usb-wakeup-control \
-    /etc/systemd/system/usb-wakeup-control.service \
-    /etc/containers/policy.json \
-    /usr/bin/zfish /usr/share/zirconocene/
-
 RUN rm -rf /var/* && mkdir /var/tmp && bootc container lint
 
 #Free yuri at yuri.gz
