@@ -1,8 +1,6 @@
 #!/usr/bin/env -S fish --no-config
 
-# Download form dnf download --arch $(uname -m) --resolve --best
-# Install form --best
-# BOTH: --repo=
+set fish_trace 1
 
 # Disable cache after we are done
 trap 'dnf config-manager setopt keepcache=0' EXIT
