@@ -3,14 +3,14 @@
 # useful stuff from secureblue
 "hardened_malloc no_rlimit_as trivalent-subresource-filter":--repo=copr:copr.fedorainfracloud.org:secureblue:packages
 # cli utils :3
-"fish bat wget":--repo=fedora
+"fish bat wget":--repo=fedora,updates
 # install usbguard
-"install usbguard usbguard-notifier usbguard-tools":--repo=fedora
+"install usbguard usbguard-notifier usbguard-tools":--repo=fedora,updates
 # printer applet
-"system-config-printer system-config-printer-applet":--repo=fedora
+"system-config-printer system-config-printer-applet":--repo=fedora,updates
 # network manager applet
-"nm-connection-editor-desktop nm-connection-editor":--repo=fedora
+"nm-connection-editor-desktop nm-connection-editor":--repo=fedora,updates
 # dnscrypt-proxy
-"dnscrypt-proxy":--repo=fedora
+"dnscrypt-proxy":--repo=fedora,updates
 # mesa-libOpenCL for opencl bullshit
-"mesa-libOpenCL":--repo=fedora
+"mesa-libOpenCL":--repo=fedora,updates
