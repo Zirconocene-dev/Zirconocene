@@ -12,3 +12,5 @@
 "nm-connection-editor-desktop nm-connection-editor":--repo=fedora
 # dnscrypt-proxy
 "dnscrypt-proxy":--repo=fedora
+# mesa-libOpenCL for opencl bullshit
+"mesa-libOpenCL":--repo=fedora
