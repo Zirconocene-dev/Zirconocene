@@ -14,3 +14,5 @@
 "dnscrypt-proxy":--repo=fedora,updates
 # mesa-libOpenCL for opencl bullshit
 "mesa-libOpenCL":--repo=fedora,updates
+# libvirt networking stuff
+"libvirt daemon libvirt-daemon-driver-network libvirt-daemon-driver-interface"
