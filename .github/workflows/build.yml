@@ -37,7 +37,7 @@ jobs:
       matrix:
         flavor: [""]
         platform: ["amd64"]
-    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
+    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-26.04' || 'ubuntu-26.04-arm' }}
     steps:
       - name: Free disk space
         uses: hastd/free-disk-space@68572aeaadb7f76bd408246328e95926323402b5 # v0.1.2
@@ -49,13 +49,13 @@ jobs:
         run: |
           echo -en '[storage.options.pull_options]\nenable_partial_images = "true"' | sudo tee /etc/containers/registries.conf
         # Doing that cus of mismatching config versions, we don't need unqualified names *at all*
-      - name: Restore linuxbrew from cache
-        uses: actions/cache@v5
-        id: cache
-        if: github.ref == 'refs/heads/main'
-        with:
-          path: /home/linuxbrew
-          key: brew-${{ matrix.platform }}
+      # - name: Restore linuxbrew from cache
+      #   uses: actions/cache@v5
+      #   id: cache
+      #   if: github.ref == 'refs/heads/main'
+      #   with:
+      #     path: /home/linuxbrew
+      #     key: brew-${{ matrix.platform }}
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
@@ -115,13 +115,13 @@ jobs:
           # HACK: push a second time so layer annotations are present
           # TODO: remove me when https://github.com/containers/podman/issues/27796 fixed
           for i in $(seq "${MAX_RETRIES}"); do
-            sudo /home/linuxbrew/.linuxbrew/bin/podman push --compression-format=zstd:chunked --digestfile=/tmp/digestfile "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" "${IMAGE_REGISTRY}/${IMAGE_NAME}:${DEFAULT_TAG}-${PLATFORM}" && break || sleep $((5 * i));
+            sudo podman push --compression-format=zstd:chunked --digestfile=/tmp/digestfile "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" "${IMAGE_REGISTRY}/${IMAGE_NAME}:${DEFAULT_TAG}-${PLATFORM}" && break || sleep $((5 * i));
           done
           echo "remote_image_digest=$(< /tmp/digestfile)" | tee "${GITHUB_OUTPUT}"
 
 
           for i in $(seq "${MAX_RETRIES}"); do
-            sudo /home/linuxbrew/.linuxbrew/bin/podman push --compression-format=zstd:chunked --digestfile=/tmp/digestfile "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" "${IMAGE_REGISTRY}/${IMAGE_NAME}:${DEFAULT_TAG}-${PLATFORM}" && break || sleep $((5 * i));
+            sudo podman push --compression-format=zstd:chunked --digestfile=/tmp/digestfile "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" "${IMAGE_REGISTRY}/${IMAGE_NAME}:${DEFAULT_TAG}-${PLATFORM}" && break || sleep $((5 * i));
           done
           echo "remote_image_digest=$(< /tmp/digestfile)" | tee "${GITHUB_OUTPUT}"
 
